@@ -1,6 +1,7 @@
 package com.techcodeme.ems.service;
 
 import com.techcodeme.ems.entity.Employee;
+import com.techcodeme.ems.exception.ResourceNotFoundException;
 import com.techcodeme.ems.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElse(null);
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
     }
 }
